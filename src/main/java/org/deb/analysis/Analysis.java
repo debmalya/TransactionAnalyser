@@ -26,7 +26,7 @@ public class Analysis {
 	 */
 	public DoubleSummaryStatistics analyzeTransactions(Collection<Transaction> transactions, String merchant,
 			String startDateTime, String endDateTime) throws ParseException {
-		DoubleSummaryStatistics dss = null;
+		DoubleSummaryStatistics dss = new DoubleSummaryStatistics();
 
 		if (transactions != null && merchant != null && startDateTime != null && endDateTime != null) {
 			Date start = CSVLoader.ddMMyyyyhhmmss.parse(startDateTime);

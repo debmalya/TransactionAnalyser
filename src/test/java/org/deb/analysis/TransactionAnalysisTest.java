@@ -25,7 +25,7 @@ public class TransactionAnalysisTest {
 
 		try {
 			DoubleSummaryStatistics dss = analysis.analyzeTransactions(null, null, null, null);
-			Assert.assertNull(dss);
+			Assert.assertNotNull(dss);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			Assert.assertFalse(e.getMessage(), true);
@@ -43,7 +43,9 @@ public class TransactionAnalysisTest {
 		try {
 			DoubleSummaryStatistics dss = analysis.analyzeTransactions(null, "Kwik-E-Mart", "20/08/2018 12:00:00",
 					"20/08/2018 13:00:00");
-			Assert.assertNull(dss);
+			Assert.assertNotNull(dss);
+			Assert.assertEquals(0, dss.getCount());
+			Assert.assertEquals(0.00, dss.getAverage(), 0.00);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			Assert.assertFalse(e.getMessage(), true);
