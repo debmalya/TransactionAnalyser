@@ -84,6 +84,12 @@ public class TransactionAnalysisTest {
 			Assert.assertNotNull(dss);
 			Assert.assertEquals(1, dss.getCount());
 			Assert.assertEquals(99.50, dss.getAverage(), 0.00);
+			
+			dss = analysis.analyzeTransactions(loader.loadTransactions("./src/main/resources/transactions.csv"),
+					"MacLaren", "20/08/2018 12:50:02", "20/08/2018 14:07:10");
+			Assert.assertNotNull(dss);
+			Assert.assertEquals(2, dss.getCount());
+			Assert.assertEquals(52.25, dss.getAverage(), 0.00);
 
 		} catch (ParseException e) {
 			e.printStackTrace();

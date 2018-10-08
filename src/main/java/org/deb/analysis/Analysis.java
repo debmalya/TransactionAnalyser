@@ -30,8 +30,13 @@ public class Analysis {
 
 		if (transactions != null && merchant != null && startDateTime != null && endDateTime != null) {
 			Date start = CSVLoader.ddMMyyyyhhmmss.parse(startDateTime);
+			long startTime = start.getTime()-1;
+			start.setTime(startTime);
+			
 			Date end = CSVLoader.ddMMyyyyhhmmss.parse(endDateTime);
-
+			long endTime = end.getTime()+1;
+			end.setTime(endTime);
+			
 			dss = transactions
 					.stream().parallel().filter(p -> p.getMerchant().equalsIgnoreCase(merchant)
 							&& p.getDate().after(start) && p.getDate().before(end))

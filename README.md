@@ -24,11 +24,12 @@ The input file is well formed and is not missing data.
 ## How to build
 ```
 mvn clean install 
-
 ```
 
 ## How to run
+```
 mvn exec:java -Dexec.mainClass="org.deb.App"
+```
 
 or execute
 ./run.sh
@@ -48,5 +49,5 @@ org.deb.analysis.TransactionAnalysisTest - to test Transaction analysis.
 opencsv - to read CSV files.
 org.openjdk.jmh - to do micro benchmark.
 
-
-
+### How to run benchmark
+java -jar target/benchmarks.jar

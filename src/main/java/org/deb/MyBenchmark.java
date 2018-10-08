@@ -33,12 +33,16 @@ package org.deb;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.concurrent.TimeUnit;
 
+import org.deb.analysis.Analysis;
 import org.deb.loader.CSVLoader;
 import org.deb.loader.CSVLoaderImpl;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+
 /**
  * 
  * @author debmalyajash
@@ -46,15 +50,19 @@ import org.openjdk.jmh.annotations.Mode;
  */
 public class MyBenchmark {
 
-    @Benchmark
-    @BenchmarkMode(Mode.All)
-    public void testCSVLoading() {
-    	CSVLoader loader = new CSVLoaderImpl();
+	@Benchmark
+	@BenchmarkMode(Mode.AverageTime)
+	@OutputTimeUnit(TimeUnit.MILLISECONDS)
+	public void testAnalysis() {
+		Analysis analysis = new Analysis();
+		CSVLoader loader = new CSVLoaderImpl();
 		try {
-			loader.loadTransactions("./src/main/resources/transactions.csv");
-		} catch (IOException | ParseException e) {
+			analysis.analyzeTransactions(loader.loadTransactions("./src/main/resources/transactions.csv"), "Kwik-E-Mart", "20/08/2018 12:00:00", "20/08/2018 13:00:00");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
 }
