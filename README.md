@@ -35,19 +35,19 @@ or execute
 ./run.sh
 
 ### Main Classes
-org.deb.loader.CSVLoaderImpl - loadTransactions method returns all PAYMENT transactions which are without any REVERSAL from csv file.
+* org.deb.loader.CSVLoaderImpl - loadTransactions method returns all PAYMENT transactions which are without any REVERSAL from csv file.
 
-org.deb.analysis.Analysis - Analyze transactions.
+* org.deb.analysis.Analysis - Analyze transactions.
 
 ## Test Classes
-org.deb.loader.CSVLoaderImplTest - to test CSV loading.
-org.deb.analysis.TransactionAnalysisTest - to test Transaction analysis. 
+* org.deb.loader.CSVLoaderImplTest - to test CSV loading.
+* org.deb.analysis.TransactionAnalysisTest - to test Transaction analysis. 
 
 
 
 ### 3rd party libraries
-opencsv - to read CSV files.
-org.openjdk.jmh - to do micro benchmark.
+* opencsv - to read CSV files.
+* org.openjdk.jmh - to do micro benchmark.
 
 ### How to run benchmark
 java -jar target/benchmarks.jar
