@@ -4,8 +4,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,17 +23,17 @@ public class CSVLoaderImpl implements CSVLoader {
 	private static final Logger logger = Logger.getLogger("CSVLoaderImpl");
 
 	@Override
-	public Collection<Transaction> loadTransactions(String csvFile) throws IOException, ParseException {
-		Collection<Transaction> transactions = new ArrayList<>();
+	public List<Transaction> loadTransactions(String csvFile) throws IOException, ParseException {
+		List<Transaction> transactions = new ArrayList<>();
 
-		// Here I am maintaining transaction id as key and transaction as value.
+		// Here I am maintaining transaction id as key and index as value.
 		// Each PAYMENT transaction will be added here.
 		// Later If I encounter any REVERSAL transaction
 		// Retrieve the original transaction from this map.
 		// Remove the original transaction from the collection of transactions.
 		// So that transaction collection will not have any reverse transaction
 		// irrespective of date.
-		Map<String, Transaction> transactionMap = new HashMap<>();
+		Map<String, Integer> transactionMap = new HashMap<>();
 
 		try (CSVReader reader = new CSVReader(new FileReader(csvFile))) {
 			boolean isFirstLine = true;
@@ -53,18 +53,19 @@ public class CSVLoaderImpl implements CSVLoader {
 					String paymentType = eachLine[4].trim();
 					if ("PAYMENT".equalsIgnoreCase(paymentType)) {
 						transaction.setTransactionType(TransactionType.PAYMENT);
+						transactionMap.put(transaction.getID(), transactions.size());
 						transactions.add(transaction);
-						transactionMap.put(transaction.getID(), transaction);
+						
 					} else if ("REVERSAL".equalsIgnoreCase(paymentType)) {
 						transaction.setTransactionType(TransactionType.REVERSAL);
 						if (eachLine.length > 5) {
-							Transaction reverseTransaction = transactionMap.get(eachLine[5].trim());
+							Integer reverseTransaction = transactionMap.get(eachLine[5].trim());
 							if (reverseTransaction != null) {
-								boolean isRemoved = transactions.remove(reverseTransaction);
-								if (isRemoved) {
+								boolean isRemoved = transactions.remove(transactions.get(reverseTransaction));
+								if (!isRemoved) {
 									logger.log(Level.INFO, String.format(
-											"Original transaction with id '%s' removed from collection, REVERSAL transaction id is '%s' ",
-											reverseTransaction.getID(), eachLine[0]));
+											"Not able to remove original transaction with id '%s' from collection, REVERSAL transaction id is '%s' ",
+											reverseTransaction, eachLine[0]));
 								}
 							} else {
 								logger.log(Level.SEVERE,
