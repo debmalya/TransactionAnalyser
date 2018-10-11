@@ -7,7 +7,7 @@ import java.util.DoubleSummaryStatistics;
 
 import org.deb.analysis.Analysis;
 import org.deb.loader.CSVLoader;
-import org.deb.loader.CSVLoaderImpl;
+import org.deb.loader.impl.CSVLoaderImpl;
 import org.deb.model.Transaction;
 
 public class App {

@@ -37,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.deb.analysis.Analysis;
 import org.deb.loader.CSVLoader;
-import org.deb.loader.CSVLoaderImpl;
+import org.deb.loader.impl.CSVLoaderImpl;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;

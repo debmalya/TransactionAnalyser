@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Collection;
 
+import org.deb.loader.impl.CSVLoaderImpl;
 import org.deb.model.Transaction;
 import org.junit.Assert;
 import org.junit.Test;

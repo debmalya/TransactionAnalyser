@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.util.DoubleSummaryStatistics;
 
 import org.deb.loader.CSVLoader;
-import org.deb.loader.CSVLoaderImpl;
+import org.deb.loader.impl.CSVLoaderImpl;
 import org.junit.Assert;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.deb.loader;
+package org.deb.loader.impl;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.deb.loader.CSVLoader;
 import org.deb.model.Transaction;
 import org.deb.model.TransactionType;
 
@@ -29,7 +30,7 @@ public class CSVLoaderImpl implements CSVLoader {
 		// Here I am maintaining transaction id as key and index as value.
 		// Each PAYMENT transaction will be added here.
 		// Later If I encounter any REVERSAL transaction
-		// Retrieve the original transaction from this map.
+		// Retrieve the original transaction using this map.
 		// Remove the original transaction from the collection of transactions.
 		// So that transaction collection will not have any reverse transaction
 		// irrespective of date.
