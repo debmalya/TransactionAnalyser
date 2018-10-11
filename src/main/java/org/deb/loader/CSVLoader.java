@@ -7,6 +7,7 @@ import java.util.Collection;
 
 import org.deb.model.Transaction;
 
+@FunctionalInterface
 public interface CSVLoader {
 	/**
 	 * Transaction date format.

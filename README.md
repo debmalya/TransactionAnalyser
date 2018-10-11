@@ -35,7 +35,7 @@ or execute
 ./run.sh
 
 ### Main Classes
-* org.deb.loader.CSVLoaderImpl - loadTransactions method returns all PAYMENT transactions which are without any REVERSAL from csv file.
+* org.deb.loader.impl.CSVLoaderImpl - loadTransactions method returns all PAYMENT transactions which are without any REVERSAL from csv file.
 
 * org.deb.analysis.Analysis - Analyze transactions.
 
