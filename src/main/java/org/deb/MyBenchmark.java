@@ -64,5 +64,19 @@ public class MyBenchmark {
 			e.printStackTrace();
 		}
 	}
+	
+	@Benchmark
+	@BenchmarkMode(Mode.AverageTime)
+	@OutputTimeUnit(TimeUnit.MILLISECONDS)
+	public void testCSVLoading(){
+		CSVLoader loader = new CSVLoaderImpl();
+		try {
+			loader.loadTransactions("./src/main/resources/transactions.csv");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

@@ -58,9 +58,9 @@ public class Analysis {
 	 * @return
 	 * @throws ParseException
 	 */
-	public DoubleSummaryStatistics analyzeTransactionSC(Collection<Transaction> transactions, String merchant,
+	public boolean isThereMatchingTransaction(Collection<Transaction> transactions, String merchant,
 			String startDateTime, String endDateTime) throws ParseException {
-		DoubleSummaryStatistics dss = new DoubleSummaryStatistics();
+		boolean isThereMatchingTransactions = false;
 
 		if (transactions != null && merchant != null && startDateTime != null && endDateTime != null) {
 			Date start = CSVLoader.ddMMyyyyhhmmss.parse(startDateTime);
@@ -73,13 +73,13 @@ public class Analysis {
 			
 			// parallel to take processing advantage of multiple processors.
 			// predicate to filter out only relevant one.
-			// summaryStatistics is terminal method.
-			boolean allTransactions = transactions
-					.stream().parallel().allMatch(p -> p.getMerchant().equalsIgnoreCase(merchant)
+			// anyMatch is terminal method.
+			isThereMatchingTransactions = transactions
+					.stream().parallel().anyMatch(p -> p.getMerchant().equalsIgnoreCase(merchant)
 							&& p.getDate().after(start) && p.getDate().before(end));
 
 		}
-		return dss;
+		return isThereMatchingTransactions;
 	}
 
 }

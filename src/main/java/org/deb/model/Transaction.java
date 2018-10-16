@@ -27,6 +27,15 @@ public class Transaction implements Serializable {
 	 */
 	private String merchant;
 
+	public Transaction(String line) {
+		String[] values = line.split(",");
+		
+	}
+	
+	public Transaction(){
+		
+	}
+
 	public String getMerchant() {
 		return merchant;
 	}

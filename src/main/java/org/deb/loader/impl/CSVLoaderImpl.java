@@ -1,5 +1,6 @@
 package org.deb.loader.impl;
 
+import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.deb.loader.CSVLoader;
 import org.deb.model.Transaction;
@@ -86,6 +88,21 @@ public class CSVLoaderImpl implements CSVLoader {
 		}
 
 		return transactions;
+	}
+	/**
+	 * 
+	 * @param csvFile to load
+	 * @return all the transactions in the file.
+	 * @throws IOException
+	 * @throws ParseException
+	 */
+	public List<Transaction> loadAllTransactions(String csvFile) throws IOException, ParseException {
+		
+		try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))){
+			return reader.lines().map(line->new Transaction(line)).collect(Collectors.toList());
+			
+		}
+		
 	}
 
 }
