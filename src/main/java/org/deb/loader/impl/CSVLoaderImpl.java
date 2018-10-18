@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class CSVLoaderImpl implements CSVLoader {
 						transaction.setTransactionType(TransactionType.PAYMENT);
 						transactionMap.put(transaction.getID(), transactions.size());
 						transactions.add(transaction);
-						
+
 					} else if ("REVERSAL".equalsIgnoreCase(paymentType)) {
 						transaction.setTransactionType(TransactionType.REVERSAL);
 						if (eachLine.length > 5) {
@@ -66,18 +67,21 @@ public class CSVLoaderImpl implements CSVLoader {
 							if (reverseTransaction != null) {
 								boolean isRemoved = transactions.remove(transactions.get(reverseTransaction));
 								if (!isRemoved) {
-									logger.log(Level.INFO, String.format(
-											"Not able to remove original transaction with id '%s' from collection, REVERSAL transaction id is '%s' ",
-											reverseTransaction, eachLine[0]));
+									logger.log(Level.INFO,
+											String.format(
+													"Not able to remove original transaction with id '%s' from collection, REVERSAL transaction id is '%s' ",
+													reverseTransaction, eachLine[0]));
 								}
 							} else {
 								logger.log(Level.SEVERE,
-										String.format("Original transaction not found for the REVERSAL transaction '%s'",
+										String.format(
+												"Original transaction not found for the REVERSAL transaction '%s'",
 												eachLine[0]));
 							}
 						} else {
-							logger.log(Level.SEVERE, String.format(
-									"Original transaction id is missing in the REVERSAL transaction '%s'", eachLine[0]));
+							logger.log(Level.SEVERE,
+									String.format("Original transaction id is missing in the REVERSAL transaction '%s'",
+											eachLine[0]));
 						}
 					}
 
@@ -89,20 +93,37 @@ public class CSVLoaderImpl implements CSVLoader {
 
 		return transactions;
 	}
+
 	/**
+	 * To read all records from CSV file.
 	 * 
-	 * @param csvFile to load
+	 * @param csvFile
+	 *            to load
 	 * @return all the transactions in the file.
 	 * @throws IOException
 	 * @throws ParseException
 	 */
 	public List<Transaction> loadAllTransactions(String csvFile) throws IOException, ParseException {
-		
-		try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))){
-			return reader.lines().map(line->new Transaction(line)).collect(Collectors.toList());
-			
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+			return reader.lines().map(line -> new Transaction(line)).collect(Collectors.toList());
+
 		}
-		
+
 	}
 
+	/**
+	 * To group transactions by merchants.
+	 * 
+	 * @param transactions
+	 *            collection of all transactions.
+	 * @return a map with key is merchant and list of transactions as value.
+	 */
+	public Map<String, List<Transaction>> groupTransactions(Collection<Transaction> transactions) {
+		Map<String, List<Transaction>> mappedTransactions = new HashMap<>();
+		if (transactions != null) {
+			return transactions.stream().collect(Collectors.groupingBy(Transaction::getMerchant));
+		}
+		return mappedTransactions;
+	}
 }
